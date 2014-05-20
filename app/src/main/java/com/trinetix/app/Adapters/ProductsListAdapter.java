@@ -89,17 +89,20 @@ public class ProductsListAdapter extends ArrayAdapter<Product>
 			viewHolder = (ViewHolderItem) convertView.getTag();
 		}
 
-		final Product product = productList.get(position);
+		final Product product = productList.get(pos);
 		viewHolder.titleTextView.setText(product.title);
 		viewHolder.descriptionTextView.setText(product.description);
 		viewHolder.priceTextView.setText(product.price);
 		viewHolder.residueTextView.setText(product.residue);
 
+		//устанавливаем на каждую картинку тэг - позицию этого товара в списке
+		viewHolder.imageView.setTag(String.valueOf(pos));
+
 		//loading image
-		if (bitmaps[position] == null)
+		if (bitmaps[pos] == null)
 		{
 			viewHolder.imageView.setImageDrawable(new ColorDrawable(Color.WHITE));
-			if (!loadingBitmap[position])
+			if (!loadingBitmap[pos])
 			{
 				Log.e(logKey, "Bitmap #" + String.valueOf(pos) + " is not loading");
 				if (null == product.image)
@@ -137,8 +140,14 @@ public class ProductsListAdapter extends ArrayAdapter<Product>
 								@Override
 								public void run()
 								{
-									viewHolder.imageView.setImageBitmap(bitmaps[pos]);
-									viewHolder.imageView.invalidate();
+									//проверяем, в ту ли позицию мы устанавливаем картинку.
+									//это важно, иначе некоторое время показываются неправильные картинки
+									if ( (bitmaps[pos] != null) && (String.valueOf(pos).equals(viewHolder.imageView.getTag())) )
+									{
+										Log.e(logKey, "Setting loaded image from URL " + product.image + " to item number " + String.valueOf(pos));
+										viewHolder.imageView.setImageBitmap(bitmaps[pos]);
+										viewHolder.imageView.invalidate();
+									}
 								}
 							});
 						}
@@ -152,12 +161,10 @@ public class ProductsListAdapter extends ArrayAdapter<Product>
 		}
 		else
 		{
-			viewHolder.imageView.setImageBitmap(bitmaps[position]);
+			Log.e(logKey, "Setting pre-loaded image from URL " + product.image + " to item number " + String.valueOf(pos));
+			viewHolder.imageView.setImageBitmap(bitmaps[pos]);
 			viewHolder.imageView.invalidate();
 		}
-
-		//устанавливаем на каждую картинку тэг - позицию этого товара в списке
-		viewHolder.imageView.setTag(String.valueOf(position));
 
 		//setting up drag and drop
 		viewHolder.imageView.setOnLongClickListener(new View.OnLongClickListener()
@@ -179,4 +186,5 @@ public class ProductsListAdapter extends ArrayAdapter<Product>
 		});
 		return convertView;
 	}
+
 }
