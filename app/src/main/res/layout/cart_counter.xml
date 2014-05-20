@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="5dip"
+        android:background="#222222">
+
+    <Button
+            android:id="@+id/notif_count"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:minWidth="32dp"
+            android:minHeight="32dp"
+            android:background="@drawable/ic_action_add_to_cart"
+            android:text="@string/zero"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            android:gravity="center"
+            android:singleLine="true"/>
+
+</LinearLayout>
+

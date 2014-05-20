@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_margin="5dip"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:id="@+id/product_title_textview"
+                android:text="Product 1"
+                android:layout_margin="5dip"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/product_description_textview"
+                android:text="The best product in the world!"
+                android:layout_marginLeft="5dip"
+                android:textStyle="italic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <RelativeLayout
+                android:gravity="left"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:id="@+id/price_prompt_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dip"
+                    android:textSize="16sp"
+                    android:text="@string/price_prompt"/>
+
+            <TextView
+                    android:layout_toRightOf="@id/price_prompt_textview"
+                    android:id="@+id/product_price_textview"
+                    android:layout_marginTop="5dip"
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="330.50"
+                    android:textStyle="bold"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:gravity="left"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:id="@+id/residue_prompt_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dip"
+                    android:textSize="16sp"
+                    android:text="@string/quantity_in_cart_prompt"/>
+
+            <TextView
+                    android:layout_toRightOf="@id/residue_prompt_textview"
+                    android:id="@+id/product_residue_textview"
+                    android:layout_marginLeft="5dip"
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2"
+                    android:textStyle="bold"/>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

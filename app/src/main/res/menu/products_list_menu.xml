@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Refresh, should appear as action button -->
+    <item android:id="@+id/action_cart"
+          android:icon="@drawable/shape_notification"
+          android:actionLayout="@layout/cart_counter"
+          android:title="@string/action_cart"
+          android:showAsAction="always"/>
+</menu>
