@@ -43,10 +43,10 @@ public class MyDragShadowBuilder extends View.DragShadowBuilder
 	public void onProvideShadowMetrics(Point size, Point touch)
 	{
 		// Sets the width of the shadow to 1/4 of the width of the original View
-		int width = getView().getWidth() / 4;
+		int width = getView().getWidth() / 3;
 
 		// Sets the height of the shadow to 1/4 of the height of the original View
-		int height = getView().getHeight() / 4;
+		int height = getView().getHeight() / 3;
 
 		// The drag shadow is a ColorDrawable. This sets its dimensions to be the same as the
 		// Canvas that the system will provide. As a result, the drag shadow will fill the
