@@ -107,10 +107,7 @@ public class PasswordActivity extends Activity
 		    @Override
 		    public void onClick(View v)
 		    {
-			    //меняем текст на кнопке на "загрузка..."
-			    okButton.setText(loadingString);
-			    okButton.setClickable(false);
-
+				//если пароль введён не полностью, ничего не делаем
 			    String password = "";
 			    for (int i = 0; i < PASSWORD_INPUTS_NUMBER; i++)
 			    {
@@ -125,11 +122,16 @@ public class PasswordActivity extends Activity
 				    }
 			    }
 
+			    //если нет интернета, ничего не делаем
 			    if (!InternetHelper.internetIsOn(PasswordActivity.this))
 			    {
 				    showError(internetIsOff);
 				    return;
 			    }
+
+			    //меняем текст на кнопке на "загрузка..."
+			    okButton.setText(loadingString);
+			    okButton.setClickable(false);
 
 			    //после получения результата в этом активити будет вызван метод parseProducts(String)
 			    ApiHelper apiHelper = new ApiHelper(PasswordActivity.this);

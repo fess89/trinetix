@@ -2,7 +2,7 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Refresh, should appear as action button -->
+    <!-- Clear cart, should appear as action button -->
     <item android:id="@+id/action_clear_cart"
           android:icon="@drawable/ic_action_clear_cart"
           android:title="@string/action_clear_cart"
