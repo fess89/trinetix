@@ -1,8 +1,8 @@
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "19.0.3"
+    buildToolsVersion "21.1.2"
 
     signingConfigs {
 
@@ -22,13 +22,13 @@ android {
     }
     buildTypes {
         release {
-            runProguard false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
             signingConfig signingConfigs.myConfig
             debuggable false
         }
         debug {
-            runProguard false
+            minifyEnabled false
             proguardFiles 'proguard-rules.txt'
             debuggable true
         }
