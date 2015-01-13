@@ -11,8 +11,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class ProductDBHelper extends SQLiteOpenHelper
 {
 	// If you change the database schema, you must increment the database version.
-	public static final int DATABASE_VERSION = 1;
-	public static final String DATABASE_NAME = "Products.db";
+	private static final int DATABASE_VERSION = 1;
+	private static final String DATABASE_NAME = "Products.db";
 
 	private static final String TEXT_TYPE = " TEXT";
 	private static final String COMMA_SEP = ",";

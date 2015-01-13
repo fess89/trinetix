@@ -19,7 +19,7 @@ public class PasswordActivity extends Activity
 	private static final int PASSWORD_INPUTS_NUMBER = 4;
 	private static final int MAX_CHARS_IN_ONE_INPUT = 1;
 
-	private EditText[] passwordInputs = new EditText[PASSWORD_INPUTS_NUMBER];
+	private final EditText[] passwordInputs = new EditText[PASSWORD_INPUTS_NUMBER];
 
 	private Button okButton;
 
@@ -108,7 +108,7 @@ public class PasswordActivity extends Activity
 		    public void onClick(View v)
 		    {
 				//если пароль введён не полностью, ничего не делаем
-			    String password = "";
+                StringBuilder stringBuilder = new StringBuilder();
 			    for (int i = 0; i < PASSWORD_INPUTS_NUMBER; i++)
 			    {
 				    String currentInput = passwordInputs[i].getText().toString();
@@ -118,9 +118,11 @@ public class PasswordActivity extends Activity
 					    return;
 				    } else
 				    {
-					    password += currentInput;
+                        stringBuilder.append(currentInput);
 				    }
 			    }
+
+                String password = stringBuilder.toString();
 
 			    //если нет интернета, ничего не делаем
 			    if (!InternetHelper.internetIsOn(PasswordActivity.this))
@@ -164,7 +166,7 @@ public class PasswordActivity extends Activity
 		startActivity(intent);
 	}
 
-	public void showError(String s)
+	private void showError(String s)
 	{
 		Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
 	}

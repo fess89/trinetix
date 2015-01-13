@@ -16,57 +16,49 @@ import java.util.List;
  * Адаптер для краткого показа продуктов в корзине.
  * Created by fess on 5/19/14.
  */
-public class CartAdapter extends ArrayAdapter<Product>
-{
-	private List<Product> productList;
-	private int resource;
-	private LayoutInflater inflater;
+public class CartAdapter extends ArrayAdapter<Product> {
 
-	public CartAdapter(Context context, int resource, List<Product> productList)
-	{
-		super(context, resource, productList);
-		this.productList = productList;
-		this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		this.resource = resource;
-	}
+    private final List<Product> productList;
+    private final LayoutInflater inflater;
 
-	//храним использованные вьюшки здесь, чтобы не создавать layout с нуля
-	private static class ViewHolderItem
-	{
-		public TextView titleTextView;
-		public TextView descriptionTextView;
-		public TextView priceTextView;
-		public TextView residueTextView;
-	}
+    public CartAdapter(Context context, List<Product> productList) {
+        super(context, 0, productList);
+        this.productList = productList;
+        this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
 
-	@Override
-	public View getView(int position, View convertView, ViewGroup parent)
-	{
-		final ViewHolderItem viewHolder;
+    //храним использованные вьюшки здесь, чтобы не создавать layout с нуля
+    private static class ViewHolderItem {
+        public TextView titleTextView;
+        public TextView descriptionTextView;
+        public TextView priceTextView;
+        public TextView residueTextView;
+    }
 
-		if (null == convertView)
-		{
-			convertView = inflater.inflate(resource, parent, false);
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        final ViewHolderItem viewHolder;
 
-			viewHolder = new ViewHolderItem();
-			viewHolder.titleTextView = (TextView) convertView.findViewById(R.id.product_title_textview);
-			viewHolder.descriptionTextView = (TextView) convertView.findViewById(R.id.product_description_textview);
-			viewHolder.priceTextView = (TextView) convertView.findViewById(R.id.product_price_textview);
-			viewHolder.residueTextView = (TextView) convertView.findViewById(R.id.product_residue_textview);
+        if (null == convertView) {
+            convertView = inflater.inflate(R.layout.cart_list_item, parent, false);
 
-			convertView.setTag(viewHolder);
-		}
-		else
-		{
-			viewHolder = (ViewHolderItem) convertView.getTag();
-		}
+            viewHolder = new ViewHolderItem();
+            viewHolder.titleTextView = (TextView) convertView.findViewById(R.id.product_title_textview);
+            viewHolder.descriptionTextView = (TextView) convertView.findViewById(R.id.product_description_textview);
+            viewHolder.priceTextView = (TextView) convertView.findViewById(R.id.product_price_textview);
+            viewHolder.residueTextView = (TextView) convertView.findViewById(R.id.product_residue_textview);
 
-		Product product = productList.get(position);
-		viewHolder.titleTextView.setText(product.title);
-		viewHolder.descriptionTextView.setText(product.description);
-		viewHolder.priceTextView.setText(product.price);
-		viewHolder.residueTextView.setText(product.residue);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolderItem) convertView.getTag();
+        }
 
-		return convertView;
-	}
+        Product product = productList.get(position);
+        viewHolder.titleTextView.setText(product.title);
+        viewHolder.descriptionTextView.setText(product.description);
+        viewHolder.priceTextView.setText(product.price);
+        viewHolder.residueTextView.setText(product.residue);
+
+        return convertView;
+    }
 }

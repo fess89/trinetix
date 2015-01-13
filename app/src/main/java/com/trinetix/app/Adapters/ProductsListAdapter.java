@@ -28,21 +28,19 @@ import java.util.List;
  */
 public class ProductsListAdapter extends ArrayAdapter<Product>
 {
-	private String logKey;
+	private final String logKey;
 
-	private List<Product> productList;
-	private int resource;
-	private LayoutInflater inflater;
+	private final List<Product> productList;
+	private final LayoutInflater inflater;
 
-	private Bitmap[] bitmaps;
-	private Boolean[] loadingBitmap;
+	private final Bitmap[] bitmaps;
+	private final Boolean[] loadingBitmap;
 
-	public ProductsListAdapter(Context context, int resource, List<Product> productList)
+	public ProductsListAdapter(Context context, List<Product> productList)
 	{
-		super(context, resource, productList);
+		super(context, 0, productList);
 		this.productList = productList;
 		this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		this.resource = resource;
 		this.bitmaps = new Bitmap[productList.size()];
 
 		//initially, all bitmaps are not loading
@@ -73,7 +71,7 @@ public class ProductsListAdapter extends ArrayAdapter<Product>
 
 		if (null == convertView)
 		{
-			convertView = inflater.inflate(resource, parent, false);
+			convertView = inflater.inflate(R.layout.products_list_item, parent, false);
 
 			viewHolder = new ViewHolderItem();
 			viewHolder.titleTextView = (TextView) convertView.findViewById(R.id.product_title_textview);
@@ -104,64 +102,51 @@ public class ProductsListAdapter extends ArrayAdapter<Product>
 			viewHolder.imageView.setImageDrawable(new ColorDrawable(Color.WHITE));
 			if (!loadingBitmap[pos])
 			{
-				Log.e(logKey, "Bitmap #" + String.valueOf(pos) + " is not loading");
-				if (null == product.image)
-				{
-					Log.e(logKey, "Product image URL is null, not loading image");
-				}
-				else
-				{
-					new Thread(new Runnable()
-					{
-						@Override
-						public void run()
-						{
-							Log.e(logKey, "Loading bitmap from URL: " + product.image);
+                if (null != product.image) {
+                    new Thread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            //actually loading the bitmap
+                            Bitmap loadedBitmap = null;
+                            try
+                            {
+                                InputStream in = new URL(product.image).openStream();
+                                loadedBitmap = BitmapFactory.decodeStream(in);
+                            }
+                            catch (Exception e)
+                            {
+                                Log.e(logKey, "An exception occurred while loading a bitmap from URL: " + product.image);
+                            }
 
-							//actually loading the bitmap
-							Bitmap loadedBitmap = null;
-							try
-							{
-								InputStream in = new URL(product.image).openStream();
-								loadedBitmap = BitmapFactory.decodeStream(in);
-							}
-							catch (Exception e)
-							{
-								Log.e(logKey, "An exception occurred while loading a bitmap from URL: " + product.image);
-							}
-							Log.e(logKey, "Finished loading bitmap from URL: " + product.image);
+                            //saving the bitmap
+                            bitmaps[pos] = loadedBitmap;
 
-							//saving the bitmap
-							bitmaps[pos] = loadedBitmap;
+                            //changing image on background thread
+                            viewHolder.imageView.post(new Runnable()
+                            {
+                                @Override
+                                public void run()
+                                {
+                                    //проверяем, в ту ли позицию мы устанавливаем картинку.
+                                    //это важно, иначе некоторое время показываются неправильные картинки
+                                    if ( (bitmaps[pos] != null) && (String.valueOf(pos).equals(viewHolder.imageView.getTag())) )
+                                    {
+                                        viewHolder.imageView.setImageBitmap(bitmaps[pos]);
+                                        viewHolder.imageView.invalidate();
+                                    }
+                                }
+                            });
+                        }
+                    }).start();
 
-							//changing image on background thread
-							viewHolder.imageView.post(new Runnable()
-							{
-								@Override
-								public void run()
-								{
-									//проверяем, в ту ли позицию мы устанавливаем картинку.
-									//это важно, иначе некоторое время показываются неправильные картинки
-									if ( (bitmaps[pos] != null) && (String.valueOf(pos).equals(viewHolder.imageView.getTag())) )
-									{
-										Log.e(logKey, "Setting loaded image from URL " + product.image + " to item number " + String.valueOf(pos));
-										viewHolder.imageView.setImageBitmap(bitmaps[pos]);
-										viewHolder.imageView.invalidate();
-									}
-								}
-							});
-						}
-					}).start();
-
-					loadingBitmap[pos] = true;
-					Log.e(logKey, "Bitmap #" + String.valueOf(pos) + " loading...");
-				}
-
-			}
+                    loadingBitmap[pos] = true;
+                }
+            }
 		}
 		else
 		{
-			Log.e(logKey, "Setting pre-loaded image from URL " + product.image + " to item number " + String.valueOf(pos));
 			viewHolder.imageView.setImageBitmap(bitmaps[pos]);
 			viewHolder.imageView.invalidate();
 		}
@@ -186,5 +171,4 @@ public class ProductsListAdapter extends ArrayAdapter<Product>
 		});
 		return convertView;
 	}
-
 }

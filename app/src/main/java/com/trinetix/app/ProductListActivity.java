@@ -148,16 +148,16 @@ public class ProductListActivity extends Activity
 		}
 
 		List<Product> productList = Arrays.asList(products);
-		adapter = new ProductsListAdapter(this, R.layout.products_list_item, productList);
+		adapter = new ProductsListAdapter(this, productList);
 		productsListView.setAdapter(adapter);
 	}
 
-	public void showError(String s)
+	private void showError(String s)
 	{
 		Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
 	}
 
-	protected class MyDragEventListener implements View.OnDragListener
+	private class MyDragEventListener implements View.OnDragListener
 	{
 		public boolean onDrag(View v, DragEvent event)
 		{

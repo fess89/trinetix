@@ -21,7 +21,7 @@ public class Product
 
 	public void setId(String id)
 	{
-		this.id = Integer.valueOf(id);
+		this.id = Integer.parseInt(id);
 	}
 
 	public void setTitle(String title)

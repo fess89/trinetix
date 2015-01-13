@@ -8,7 +8,6 @@ import android.provider.BaseColumns;
  */
 public final class ProductContract
 {
-	public ProductContract() {}
 
 	/* Inner class that defines the table contents */
 	public static abstract class ProductEntry implements BaseColumns
